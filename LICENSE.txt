@@ -1,0 +1,10 @@
+Copyright (c) 2025 Redfoot Labs
+
+All rights reserved.
+
+This repository and its contents are proprietary and confidential. Unauthorized copying, redistribution, or modification of any files, images, logos, designs, or code contained herein, via any medium, is strictly prohibited.
+
+No license or permission is granted for commercial use, derivative works, or redistribution.
+
+For inquiries regarding licensing or permission, please contact: [your-email@example.com]
+
