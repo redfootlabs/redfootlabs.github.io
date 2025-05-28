@@ -68,6 +68,10 @@
             width: 60px;
             margin-left: auto;
         }
+        input:disabled {
+            background-color: #eee;
+            cursor: not-allowed;
+        }
         .total-box {
             font-size: 1.2em;
             font-weight: bold;
@@ -132,70 +136,14 @@
 
 <script>
     const productsData = [
-        {
-            name: "Diagnóstico Empresarial",
-            deliverables: [
-                "Relatório completo de diagnóstico (PDF)",
-                "Sessão de apresentação com stakeholders",
-                "Roadmap de próximos passos"
-            ]
-        },
-        {
-            name: "Planejamento Estratégico",
-            deliverables: [
-                "Documento de planejamento estratégico",
-                "Template para acompanhamento mensal",
-                "Sessão de alinhamento com liderança"
-            ]
-        },
-        {
-            name: "Diagnóstico de Produto",
-            deliverables: [
-                "Relatório de avaliação do portfólio",
-                "Sessão de feedback com time de produto",
-                "Documento com recomendações"
-            ]
-        },
-        {
-            name: "Concepção de Produto",
-            deliverables: [
-                "Documento de concepção",
-                "Sessão de co-criação com stakeholders",
-                "Roadmap de versões posteriores"
-            ]
-        },
-        {
-            name: "Gestão de Produtos Digitais",
-            deliverables: [
-                "Documento de estruturação",
-                "Sessão de alinhamento com leadership",
-                "Templates de rituais ágeis"
-            ]
-        },
-        {
-            name: "Métricas e Gestão por Dados",
-            deliverables: [
-                "Framework de métricas personalizado",
-                "Painéis de acompanhamento",
-                "Definição de KPIs e OKRs"
-            ]
-        },
-        {
-            name: "Inovação e Inteligência Artificial",
-            deliverables: [
-                "Documento de oportunidades",
-                "Protótipo ou piloto básico",
-                "Roadmap de adoção gradual"
-            ]
-        },
-        {
-            name: "Análise de Oportunidades e Riscos",
-            deliverables: [
-                "Estudo estratégico",
-                "Documento de oportunidades priorizadas",
-                "Sessão de entrega com Q&A"
-            ]
-        }
+        { name: "Diagnóstico Empresarial", deliverables: ["Relatório completo de diagnóstico (PDF)", "Sessão de apresentação com stakeholders", "Roadmap de próximos passos"] },
+        { name: "Planejamento Estratégico", deliverables: ["Documento de planejamento estratégico", "Template para acompanhamento mensal", "Sessão de alinhamento com liderança"] },
+        { name: "Diagnóstico de Produto", deliverables: ["Relatório de avaliação do portfólio", "Sessão de feedback com time de produto", "Documento com recomendações"] },
+        { name: "Concepção de Produto", deliverables: ["Documento de concepção", "Sessão de co-criação com stakeholders", "Roadmap de versões posteriores"] },
+        { name: "Gestão de Produtos Digitais", deliverables: ["Documento de estruturação", "Sessão de alinhamento com leadership", "Templates de rituais ágeis"] },
+        { name: "Métricas e Gestão por Dados", deliverables: ["Framework de métricas personalizado", "Painéis de acompanhamento", "Definição de KPIs e OKRs"] },
+        { name: "Inovação e Inteligência Artificial", deliverables: ["Documento de oportunidades", "Protótipo ou piloto básico", "Roadmap de adoção gradual"] },
+        { name: "Análise de Oportunidades e Riscos", deliverables: ["Estudo estratégico", "Documento de oportunidades priorizadas", "Sessão de entrega com Q&A"] }
     ];
 
     const productsContainer = document.getElementById('products');
@@ -203,18 +151,19 @@
     productsData.forEach((product, idx) => {
         const productSection = document.createElement('div');
         productSection.className = 'product-section';
-        
+        productSection.setAttribute('data-product', product.name);
+
         const productHeader = document.createElement('div');
         productHeader.className = 'product-header';
-        
+
         const productCheckbox = document.createElement('input');
         productCheckbox.type = 'checkbox';
         productCheckbox.id = `product-${idx}`;
-        
+
         const productLabel = document.createElement('label');
         productLabel.textContent = product.name;
         productLabel.htmlFor = `product-${idx}`;
-        
+
         productHeader.appendChild(productCheckbox);
         productHeader.appendChild(productLabel);
         productSection.appendChild(productHeader);
@@ -222,23 +171,24 @@
         product.deliverables.forEach((deliv, dIdx) => {
             const deliverableDiv = document.createElement('div');
             deliverableDiv.className = 'deliverable';
-            
+            deliverableDiv.setAttribute('data-deliverable', deliv);
+
             const deliverableCheckbox = document.createElement('input');
             deliverableCheckbox.type = 'checkbox';
             deliverableCheckbox.id = `product-${idx}-deliv-${dIdx}`;
-            
+
             const deliverableLabel = document.createElement('label');
             deliverableLabel.className = 'deliverable-label';
             deliverableLabel.textContent = deliv;
             deliverableLabel.htmlFor = `product-${idx}-deliv-${dIdx}`;
-            
+
             const deliverableHours = document.createElement('input');
             deliverableHours.type = 'number';
             deliverableHours.min = '0';
             deliverableHours.placeholder = 'h';
             deliverableHours.className = 'deliverable-hours';
             deliverableHours.disabled = true;
-            
+
             deliverableCheckbox.addEventListener('change', () => {
                 deliverableHours.disabled = !deliverableCheckbox.checked;
                 updateTotal();
