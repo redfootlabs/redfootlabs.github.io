@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orçamento Redfoot Labs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="email"], input[type="tel"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .product-section {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #fafafa;
+        }
+        .product-header {
+            display: flex;
+            align-items: center;
+        }
+        .product-header input[type="checkbox"] {
+            transform: scale(1.5);
+            margin-right: 10px;
+        }
+        .deliverable {
+            display: flex;
+            align-items: center;
+            margin-left: 30px;
+            margin-bottom: 8px;
+        }
+        .deliverable input[type="checkbox"] {
+            transform: scale(1.5);
+            margin-right: 8px;
+        }
+        .deliverable-label {
+            flex: 1;
+        }
+        .deliverable-hours {
+            width: 60px;
+            margin-left: auto;
+        }
+        .total-box {
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 20px;
+        }
+        .button-group {
+            margin-top: 20px;
+            text-align: right;
+        }
+        button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            font-size: 1em;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button.confirm {
+            background-color: #28a745;
+            color: white;
+        }
+        button.cancel {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Formulário de Orçamento - Redfoot Labs</h1>
+    <div class="form-group">
+        <label>Nome</label>
+        <input type="text" placeholder="sponsor's name">
+    </div>
+    <div class="form-group">
+        <label>Email do responsável</label>
+        <input type="email" placeholder="sponsor e-mail">
+    </div>
+    <div class="form-group">
+        <label>Phone</label>
+        <input type="tel" placeholder="(XX) XXXXX-XXXX">
+    </div>
+    <div class="form-group">
+        <label>Nome da empresa</label>
+        <input type="text" placeholder="Company's name">
+    </div>
+
+    <h2>Produtos e Entregáveis</h2>
+
+    <div id="products"></div>
+
+    <div class="total-box">
+        Total: R$ <span id="total">0.00</span>
+    </div>
+
+    <div class="button-group">
+        <button class="cancel" type="button">Cancelar</button>
+        <button class="confirm" type="button">Confirmar</button>
+    </div>
+</div>
+
+<script>
+    const productsData = [
+        {
+            name: "Diagnóstico Empresarial",
+            deliverables: [
+                "Relatório completo de diagnóstico (PDF)",
+                "Sessão de apresentação com stakeholders",
+                "Roadmap de próximos passos"
+            ]
+        },
+        {
+            name: "Planejamento Estratégico",
+            deliverables: [
+                "Documento de planejamento estratégico",
+                "Template para acompanhamento mensal",
+                "Sessão de alinhamento com liderança"
+            ]
+        },
+        {
+            name: "Diagnóstico de Produto",
+            deliverables: [
+                "Relatório de avaliação do portfólio",
+                "Sessão de feedback com time de produto",
+                "Documento com recomendações"
+            ]
+        },
+        {
+            name: "Concepção de Produto",
+            deliverables: [
+                "Documento de concepção",
+                "Sessão de co-criação com stakeholders",
+                "Roadmap de versões posteriores"
+            ]
+        },
+        {
+            name: "Gestão de Produtos Digitais",
+            deliverables: [
+                "Documento de estruturação",
+                "Sessão de alinhamento com leadership",
+                "Templates de rituais ágeis"
+            ]
+        },
+        {
+            name: "Métricas e Gestão por Dados",
+            deliverables: [
+                "Framework de métricas personalizado",
+                "Painéis de acompanhamento",
+                "Definição de KPIs e OKRs"
+            ]
+        },
+        {
+            name: "Inovação e Inteligência Artificial",
+            deliverables: [
+                "Documento de oportunidades",
+                "Protótipo ou piloto básico",
+                "Roadmap de adoção gradual"
+            ]
+        },
+        {
+            name: "Análise de Oportunidades e Riscos",
+            deliverables: [
+                "Estudo estratégico",
+                "Documento de oportunidades priorizadas",
+                "Sessão de entrega com Q&A"
+            ]
+        }
+    ];
+
+    const productsContainer = document.getElementById('products');
+
+    productsData.forEach((product, idx) => {
+        const productSection = document.createElement('div');
+        productSection.className = 'product-section';
+        
+        const productHeader = document.createElement('div');
+        productHeader.className = 'product-header';
+        
+        const productCheckbox = document.createElement('input');
+        productCheckbox.type = 'checkbox';
+        productCheckbox.id = `product-${idx}`;
+        
+        const productLabel = document.createElement('label');
+        productLabel.textContent = product.name;
+        productLabel.htmlFor = `product-${idx}`;
+        
+        productHeader.appendChild(productCheckbox);
+        productHeader.appendChild(productLabel);
+        productSection.appendChild(productHeader);
+
+        product.deliverables.forEach((deliv, dIdx) => {
+            const deliverableDiv = document.createElement('div');
+            deliverableDiv.className = 'deliverable';
+            
+            const deliverableCheckbox = document.createElement('input');
+            deliverableCheckbox.type = 'checkbox';
+            deliverableCheckbox.id = `product-${idx}-deliv-${dIdx}`;
+            
+            const deliverableLabel = document.createElement('label');
+            deliverableLabel.className = 'deliverable-label';
+            deliverableLabel.textContent = deliv;
+            deliverableLabel.htmlFor = `product-${idx}-deliv-${dIdx}`;
+            
+            const deliverableHours = document.createElement('input');
+            deliverableHours.type = 'number';
+            deliverableHours.min = '0';
+            deliverableHours.placeholder = 'h';
+            deliverableHours.className = 'deliverable-hours';
+            deliverableHours.disabled = true;
+            
+            deliverableCheckbox.addEventListener('change', () => {
+                deliverableHours.disabled = !deliverableCheckbox.checked;
+                updateTotal();
+            });
+
+            deliverableHours.addEventListener('input', updateTotal);
+
+            deliverableDiv.appendChild(deliverableCheckbox);
+            deliverableDiv.appendChild(deliverableLabel);
+            deliverableDiv.appendChild(deliverableHours);
+            productSection.appendChild(deliverableDiv);
+
+            productCheckbox.addEventListener('change', () => {
+                deliverableCheckbox.checked = productCheckbox.checked;
+                deliverableHours.disabled = !productCheckbox.checked;
+                updateTotal();
+            });
+        });
+
+        productsContainer.appendChild(productSection);
+    });
+
+    function updateTotal() {
+        let total = 0;
+        document.querySelectorAll('.deliverable').forEach(deliv => {
+            const checkbox = deliv.querySelector('input[type="checkbox"]');
+            const hoursInput = deliv.querySelector('input[type="number"]');
+            if (checkbox.checked && hoursInput.value) {
+                total += parseFloat(hoursInput.value) * 150;
+            }
+        });
+        document.getElementById('total').textContent = total.toFixed(2);
+    }
+</script>
+</body>
+</html>
