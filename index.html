@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultoria - Landing Page</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: #f0f0f0;
+        }
+        .hero {
+            background-color: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .hero img {
+            max-width: 300px;
+        }
+        section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        h2 {
+            border-bottom: 2px solid #444;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .portfolio {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .portfolio-box, .diferenciais li {
+            background-color: #1b1b1b;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .diferenciais ul {
+            list-style: none;
+            padding: 0;
+        }
+        .diferenciais li::before {
+            content: '⭐';
+            margin-right: 8px;
+            color: gold;
+        }
+        .contato {
+            text-align: center;
+        }
+        .contato button {
+            padding: 15px 30px;
+            background-color: #25D366;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .contato button:hover {
+            background-color: #1ebe5d;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <img src="logo.png" alt="Logo da Consultoria">
+    </div>
+
+    <section>
+        <h2>Quem Somos</h2>
+        <p>Somos uma consultoria especializada em negócios, tecnologia, estratégia e inovação, ajudando empresas a evoluir suas operações, explorar novos mercados e adotar inteligência artificial de forma pragmática. Trabalhamos lado a lado com executivos e times internos para gerar entregáveis claros e aplicáveis.</p>
+    </section>
+
+    <section>
+        <h2>Portfólio de Produtos</h2>
+        <div class="portfolio">
+            <div class="portfolio-box">
+                <h3>Diagnóstico Empresarial</h3>
+                <p>Análise completa do estado atual, mapeando processos, estrutura, pontos críticos e oportunidades.</p>
+            </div>
+            <div class="portfolio-box">
+                <h3>Planejamento Estratégico</h3>
+                <p>Construção ou atualização do planejamento estratégico, alinhando metas, iniciativas e roadmap executivo.</p>
+            </div>
+            <div class="portfolio-box">
+                <h3>Diagnóstico de Produto</h3>
+                <p>Avaliação do portfólio digital, identificando gaps, oportunidades e desalinhamentos com o mercado.</p>
+            </div>
+            <div class="portfolio-box">
+                <h3>Concepção de Produto</h3>
+                <p>Apoio completo na estruturação de novos produtos, da ideação aos requisitos, personas e roadmap.</p>
+            </div>
+            <div class="portfolio-box">
+                <h3>Gestão de Produtos Digitais</h3>
+                <p>Suporte para organizar times, fluxos e processos digitais, ganhando eficiência e acelerando entregas.</p>
+            </div>
+            <div class="portfolio-box">
+                <h3>Métricas e Gestão por Dados</h3>
+                <p>Implementação de frameworks, KPIs e painéis para evoluir decisões baseadas em dados.</p>
+            </div>
+            <div class="portfolio-box">
+                <h3>Inovação e Inteligência Artificial</h3>
+                <p>Identificação de oportunidades, definição de casos e construção de pilotos com IA.</p>
+            </div>
+            <div class="portfolio-box">
+                <h3>Análise de Oportunidades e Riscos</h3>
+                <p>Estudo estratégico de tendências, mercados-alvo, riscos e recomendações práticas para expansão.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="diferenciais">
+        <h2>Diferenciais Competitivos</h2>
+        <ul>
+            <li>Expertise combinando negócios + tecnologia + estratégia + inovação</li>
+            <li>Foco em inteligência, não em execução técnica</li>
+            <li>Flexibilidade para trabalhar com times internos e externos</li>
+            <li>Capacidade de gerar entregáveis executivos claros, aplicáveis e alinhados a resultados</li>
+        </ul>
+    </section>
+
+    <section class="contato">
+        <h2>Fale Conosco</h2>
+        <p>Entre em contato para transformar sua empresa com inteligência e estratégia.</p>
+        <button onclick="window.location.href='https://wa.me/SEUNUMERO'">Falar no WhatsApp</button>
+    </section>
+</body>
+</html>
