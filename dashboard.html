@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Dashboard - Redfoot Labs</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            background: #f4f6f8;
+            height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 220px;
+            background: #E91E63;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding-top: 60px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar button {
+            background: none;
+            border: none;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .sidebar button:hover,
+        .sidebar button.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar .icones-sidebar{
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* Main area */
+        .main {
+            margin-left: 220px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 220px;
+            right: 0;
+            height: 60px;
+            background: white;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1rem;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .dropdown,
+        .notif-dropdown {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: none;
+            flex-direction: column;
+            min-width: 150px;
+            z-index: 20;
+        }
+
+        .dropdown button,
+        .notif-dropdown div {
+            padding: 0.75rem;
+            border: none;
+            background: none;
+            text-align: left;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .dropdown button:hover,
+        .notif-dropdown div:hover {
+            background: #f0f0f0;
+        }
+
+        /* Content */
+        .content {
+            margin-top: 60px;
+            padding: 2rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .welcome {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .accordion {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid #eee;
+        }
+
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-header {
+            padding: 1rem;
+            cursor: pointer;
+            background: #f9f9f9;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .accordion-content {
+            padding: 1rem;
+            display: none;
+        }
+
+        .accordion-content.active {
+            display: block;
+        }
+
+        .faq {
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq h3 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <button class="tab-btn active" data-section="home">
+            <i class="icones-sidebar fa fa-home" aria-hidden="true"></i>Home
+        </button>
+        <button class="tab-btn" data-section="dashboard">
+            <i class="icones-sidebar fa fa-tachometer" aria-hidden="true"></i>Dashboard
+        </button>
+        <button class="tab-btn" data-section="assistants">
+            <i class="icones-sidebar fa fa-magic" aria-hidden="true"></i>Assistentes
+        </button>
+        <button class="tab-btn" data-section="settings">
+            <i class="icones-sidebar fa fa-cog" aria-hidden="true"></i>Configurações
+        </button>
+        <button class="tab-btn" data-section="help">
+            <i class="icones-sidebar fa fa-question-circle" aria-hidden="true"></i>Ajuda
+        </button>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <h1>Redfoot Labs</h1>
+            <div class="header-icons">
+                <div id="notif-icon">🔔</div>
+                <div class="notif-dropdown" id="notif-dropdown">
+                    <div>Nova mensagem recebida</div>
+                    <div>Atualização do projeto</div>
+                    <div>Seu pagamento foi confirmado</div>
+                </div>
+                <img src="https://via.placeholder.com/40" alt="Avatar" class="avatar" id="avatar">
+                <div class="dropdown" id="avatar-dropdown">
+                    <button id="logout">Logout</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div id="home" class="section active">
+                <div class="welcome">Bem-vindo, <span id="username">Usuário</span>!</div>
+                <p>Aqui você encontra um resumo das suas informações e status geral.</p>
+            </div>
+
+            <div id="dashboard" class="section">
+                <h2>Produtos Contratados</h2>
+                <p>Veja abaixo os produtos que você contratou e acompanhe cada entrega:</p>
+                <div class="product-grid">
+                    <!-- Linha 1 -->
+                    <div class="product-card" onclick="alert('Detalhes do Produto 1')">
+                        <img src="https://via.placeholder.com/150" alt="Produto 1">
+                        <strong>Produto 1</strong>
+                        <p>Descrição breve do produto.</p>
+                    </div>
+                    <div class="product-card" onclick="alert('Detalhes do Produto 2')">
+                        <img src="https://via.placeholder.com/150" alt="Produto 2">
+                        <strong>Produto 2</strong>
+                        <p>Descrição breve do produto.</p>
+                    </div>
+                    <div class="product-card" onclick="alert('Detalhes do Produto 3')">
+                        <img src="https://via.placeholder.com/150" alt="Produto 3">
+                        <strong>Produto 3</strong>
+                        <p>Descrição breve do produto.</p>
+                    </div>
+                    <div class="product-card" onclick="alert('Detalhes do Produto 4')">
+                        <img src="https://via.placeholder.com/150" alt="Produto 4">
+                        <strong>Produto 4</strong>
+                        <p>Descrição breve do produto.</p>
+                    </div>
+                    <!-- Linha 2 -->
+                    <div class="product-card" onclick="alert('Detalhes do Produto 5')">
+                        <img src="https://via.placeholder.com/150" alt="Produto 5">
+                        <strong>Produto 5</strong>
+                        <p>Descrição breve do produto.</p>
+                    </div>
+                    <div class="product-card" onclick="alert('Detalhes do Produto 6')">
+                        <img src="https://via.placeholder.com/150" alt="Produto 6">
+                        <strong>Produto 6</strong>
+                        <p>Descrição breve do produto.</p>
+                    </div>
+                    <div class="product-card" onclick="alert('Detalhes do Produto 7')">
+                        <img src="https://via.placeholder.com/150" alt="Produto 7">
+                        <strong>Produto 7</strong>
+                        <p>Descrição breve do produto.</p>
+                    </div>
+                    <div class="product-card" onclick="alert('Detalhes do Produto 8')">
+                        <img src="https://via.placeholder.com/150" alt="Produto 8">
+                        <strong>Produto 8</strong>
+                        <p>Descrição breve do produto.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="assistants" class="section">
+                <h2>Assistentes de IA</h2>
+                <p>Conheça nossos assistentes de IA que podem ajudar em diversas tarefas:</p>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <img src="https://via.placeholder.com/40" class="avatar"> Assistente Alpha
+                        </div>
+                        <div class="accordion-content">
+                            Descrição e funções do Assistente Alpha.
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <img src="https://via.placeholder.com/40" class="avatar"> Assistente Beta
+                        </div>
+                        <div class="accordion-content">
+                            Descrição e funções do Assistente Beta.
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <img src="https://via.placeholder.com/40" class="avatar"> Assistente Gamma
+                        </div>
+                        <div class="accordion-content">
+                            Descrição e funções do Assistente Gamma.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="settings" class="section">
+                <h2>Configurações</h2>
+                <p>Atualize seu nome, email ou senha aqui.</p>
+                <!-- Campos fictícios -->
+                <input type="text" placeholder="Nome">
+                <input type="email" placeholder="Email">
+                <input type="password" placeholder="Senha">
+                <button>Salvar Alterações</button>
+            </div>
+
+            <div id="help" class="section">
+                <h2>Ajuda</h2>
+                <div class="faq">
+                    <h3>Pergunta Frequente 1</h3>
+                    <p>Resposta à pergunta frequente 1.</p>
+                    <h3>Pergunta Frequente 2</h3>
+                    <p>Resposta à pergunta frequente 2.</p>
+                    <h3>Contato</h3>
+                    <p>Email: suporte@redfootlabs.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+    <script>
+        // Configuração Firebase (substitua pelos seus dados)
+        const firebaseConfig = {
+            apiKey: "AIzaSyA33fRSo78J1FSHbr2eQKM4yoLbWKXGWBU",
+            authDomain: "redfootlabs.firebaseapp.com",
+            projectId: "redfootlabs",
+            storageBucket: "redfootlabs.firebasestorage.app",
+            messagingSenderId: "709510653983",
+            appId: "1:709510653983:web:8eef55623e46413c398d2a"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                document.getElementById('username').textContent = user.email;
+            } else {
+                window.location.href = 'login.html';
+            }
+        });
+
+        document.getElementById('logout').addEventListener('click', () => {
+            auth.signOut().then(() => {
+                window.location.href = 'login.html';
+            });
+        });
+
+        // Tabs
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const sections = document.querySelectorAll('.section');
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                sections.forEach(sec => sec.classList.remove('active'));
+                document.getElementById(btn.dataset.section).classList.add('active');
+            });
+        });
+
+        // Dropdowns
+        const avatar = document.getElementById('avatar');
+        const avatarDropdown = document.getElementById('avatar-dropdown');
+        const notifIcon = document.getElementById('notif-icon');
+        const notifDropdown = document.getElementById('notif-dropdown');
+
+        avatar.addEventListener('click', () => {
+            avatarDropdown.style.display = avatarDropdown.style.display === 'flex' ? 'none' : 'flex';
+            notifDropdown.style.display = 'none';
+        });
+
+        notifIcon.addEventListener('click', () => {
+            notifDropdown.style.display = notifDropdown.style.display === 'flex' ? 'none' : 'flex';
+            avatarDropdown.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (!avatar.contains(e.target) && !avatarDropdown.contains(e.target)) {
+                avatarDropdown.style.display = 'none';
+            }
+            if (!notifIcon.contains(e.target) && !notifDropdown.contains(e.target)) {
+                notifDropdown.style.display = 'none';
+            }
+        });
+
+        // Accordion
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            content.classList.toggle('active');
+        }
+    </script>
+</body>
+
+</html>
