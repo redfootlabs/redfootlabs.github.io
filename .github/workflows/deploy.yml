@@ -5,7 +5,6 @@ permissions:
   pages: write
   id-token: write
 
-
 on:
   push:
     branches: [ main ]
@@ -15,7 +14,10 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Importante para o histórico completo do Git
       
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -23,7 +25,7 @@ jobs:
           node-version: '18'
           
       - name: Install dependencies
-        run: npm install
+        run: npm ci
         
       - name: Build
         env:
@@ -34,11 +36,32 @@ jobs:
           FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
           FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
           FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
-        run: npm run build
-        
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: dist
-          branch: gh-pages
-          token: ${{ secrets.DEPLOY_TOKEN }}
+        run: |
+          npm run build
+          touch dist/.nojekyll
+          
+      - name: Configurar Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          
+      - name: Fazer deploy para gh-pages
+        run: |
+          # Configura o repositório remoto com token de autenticação
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          
+          # Cria ou reseta o branch gh-pages
+          if git show-ref --verify --quiet refs/heads/gh-pages; then
+            git checkout gh-pages
+            git rm -rf .
+          else
+            git checkout --orphan gh-pages
+          fi
+          
+          # Copia os arquivos de build para o branch
+          cp -r dist/* .
+          
+          # Faz o commit e push forçado
+          git add -A
+          git commit -m "Deploy para GitHub Pages" --allow-empty
+          git push origin gh-pages --force
