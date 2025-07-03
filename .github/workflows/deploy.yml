@@ -1,5 +1,11 @@
 name: Deploy to GitHub Pages
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+
 on:
   push:
     branches: [ main ]
@@ -35,3 +41,4 @@ jobs:
         with:
           folder: dist
           branch: gh-pages
+          token: ${{ secrets.DEPLOY_TOKEN }}
