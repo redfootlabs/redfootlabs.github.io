@@ -1,19 +1,33 @@
+// Importações do Firebase
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore";  // faltava importar getFirestore
+import { getAnalytics, isSupported } from "firebase/analytics";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
+// Configuração do Firebase usando variáveis de ambiente
 const firebaseConfig = {
-  apiKey: "AIzaSyA33fRSo7jBHFh2rpeQkM4yolbNKvKGWBU",
-  authDomain: "redfootlabs.firebaseapp.com",
-  projectId: "redfootlabs",
-  storageBucket: "redfootlabs.appspot.com",
-  messagingSenderId: "179051653983",
-  appId: "1:179051653983:web:8eef56e325e4413c398d2a",
-  measurementId: "G-J8RN9ZH2WV"
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
+// Inicialização do Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getFirestore(app);  // declarando uma vez, importando getFirestore corretamente
 
-export { app, analytics, db };  // exporta tudo junto
+// Inicialização do Analytics apenas no navegador
+let analytics = null;
+if (typeof window !== 'undefined') {
+  isSupported().then(yes => {
+    if (yes) analytics = getAnalytics(app);
+  });
+}
+
+// Exportação dos serviços do Firebase
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+export { app, db, auth, analytics };
