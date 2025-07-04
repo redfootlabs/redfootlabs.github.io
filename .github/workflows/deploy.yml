@@ -19,14 +19,18 @@ jobs:
           
       - name: Setup Node.js
         run: |
-          # Usa o Node.js já instalado no runner
+          # Instala o Node.js usando nvm (Node Version Manager)
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          nvm install 18
           node --version
           npm --version
           
       - name: Install dependencies
         run: |
           cd $GITHUB_WORKSPACE/repo
-          npm ci --no-audit
+          npm install --no-audit --no-fund
         
       - name: Build
         working-directory: $GITHUB_WORKSPACE/repo
