@@ -11,30 +11,26 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout code
-        run: |
-          # Baixa o código usando curl e tar
-          mkdir -p $GITHUB_WORKSPACE/repo
-          curl -sL https://github.com/${{ github.repository }}/archive/refs/heads/${{ github.ref_name }}.tar.gz | tar xz --strip-components=1 -C $GITHUB_WORKSPACE/repo
-          cd $GITHUB_WORKSPACE/repo
-          
-      - name: Setup Node.js
-        run: |
-          # Instala o Node.js usando o gerenciador de pacotes do Ubuntu
-          curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
-          apt-get install -y nodejs
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          cache: 'npm'
           
       - name: Install dependencies
-        run: |
-          cd $GITHUB_WORKSPACE/repo
-          npm ci --no-audit --prefer-offline
-          
+        run: npm ci --no-audit
+        
       - name: Build
-        working-directory: $GITHUB_WORKSPACE/repo
         env:
           FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
@@ -47,36 +43,31 @@ jobs:
           npm run build
           touch dist/.nojekyll
           
-      - name: Setup Git
+      - name: Configure Git
         run: |
-          apt-get update
-          apt-get install -y git
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           
       - name: Deploy to gh-pages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: ${{ github.repository }}
-          BRANCH: gh-pages
         run: |
-          # Clona o repositório em um diretório temporário
-          TEMP_DIR=$(mktemp -d)
-          git clone --depth=1 --branch=$BRANCH https://x-access-token:$GITHUB_TOKEN@github.com/$REPO.git $TEMP_DIR 2>/dev/null || git init $TEMP_DIR
+          # Configura o token de autenticação
+          TOKEN=${{ secrets.GITHUB_TOKEN || secrets.DEPLOY_TOKEN }}
           
-          # Entra no diretório temporário e configura o branch
-          cd $TEMP_DIR
-          git checkout -b $BRANCH 2>/dev/null || git checkout --orphan $BRANCH
+          # Configura o repositório remoto com autenticação
+          git remote set-url origin https://x-access-token:$TOKEN@github.com/$GITHUB_REPOSITORY.git
           
-          # Remove todos os arquivos existentes, exceto .git
-          find . -maxdepth 1 ! -name '.git' -type d -exec rm -rf {} +
-          find . -maxdepth 1 ! -name '.git' -type f -delete
+          # Cria ou limpa o branch gh-pages
+          if git show-ref --quiet refs/heads/gh-pages; then
+            git checkout gh-pages
+            git rm -rf .
+          else
+            git checkout --orphan gh-pages
+          fi
           
           # Copia os arquivos de build
-          cp -r $GITHUB_WORKSPACE/repo/dist/* .
+          cp -r dist/* .
           
-          # Configura o git e faz o push
-          git remote add origin https://x-access-token:$GITHUB_TOKEN@github.com/$REPO.git
+          # Commit e push
           git add -A
           git commit -m "Deploy para GitHub Pages" --allow-empty
-          git push origin $BRANCH --force
+          git push origin gh-pages --force
