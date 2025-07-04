@@ -132,7 +132,7 @@ Exemplo: `v1.2.3`
    git push origin v1.2.3
    ```
 
-#### Boas Práticas
+#### Boas Práticas para criação de versão
 
 - Use tags anotadas (`-a`) em vez de tags leves
 - Sempre inclua uma mensagem descritiva (`-m`)
@@ -244,7 +244,7 @@ git push --delete origin v1.2.3
   - Agrupe seletores relacionados
   - Comente blocos de estilo significativos
 
-- **Boas Práticas**:
+- **Boas práticas**:
   - Use variáveis CSS para cores, fontes e espaçamentos
   - Mantenha a especificidade baixa
   - Use unidades relativas (rem, em, %) quando apropriado
@@ -293,7 +293,7 @@ git push --delete origin v1.2.3
    - A estrutura de dados é gerenciada pelo Firebase Firestore
    - Consulte a documentação do projeto para entender a estrutura atual
 
-### Boas Práticas
+### Boas Práticas para o Firebase
 
 - Nunca exponha chaves de API ou credenciais no código-fonte
 - Sempre use as regras de segurança do Firebase para proteger seus dados
