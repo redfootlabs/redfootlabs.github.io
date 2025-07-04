@@ -13,9 +13,9 @@ jobs:
       - name: Checkout code
         run: |
           # Baixa o código usando curl e tar
-          mkdir -p $GITHUB_WORKSPACE/repo
-          curl -sL https://github.com/${{ github.repository }}/archive/refs/heads/${{ github.ref_name }}.tar.gz | tar xz --strip-components=1 -C $GITHUB_WORKSPACE/repo
-          cd $GITHUB_WORKSPACE/repo
+          mkdir -p repo
+          curl -sL https://github.com/${{ github.repository }}/archive/refs/heads/${{ github.ref_name }}.tar.gz | tar xz --strip-components=1 -C repo
+          cd repo
           
       - name: Setup Node.js
         run: |
@@ -29,11 +29,14 @@ jobs:
           
       - name: Install dependencies
         run: |
-          cd $GITHUB_WORKSPACE/repo
+          cd repo
           npm install --no-audit --no-fund
         
       - name: Build
-        working-directory: $GITHUB_WORKSPACE/repo
+        run: |
+          cd repo
+          npm run build
+          touch dist/.nojekyll
         env:
           FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
@@ -42,18 +45,16 @@ jobs:
           FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
           FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
           FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
-        run: |
-          npm run build
-          touch dist/.nojekyll
           
       - name: Configure Git
         run: |
+          cd repo
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           
       - name: Deploy to gh-pages
         run: |
-          cd $GITHUB_WORKSPACE/repo
+          cd repo
           
           # Configura o token de autenticação
           TOKEN=${{ secrets.GITHUB_TOKEN || secrets.DEPLOY_TOKEN }}
