@@ -5,17 +5,25 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+# Configura permissões mínimas necessárias
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     
     steps:
       - name: Checkout code
-        run: |
-          # Baixa o código usando curl e tar
-          mkdir -p repo
-          curl -sL https://github.com/${{ github.repository }}/archive/refs/heads/${{ github.ref_name }}.tar.gz | tar xz --strip-components=1 -C repo
-          cd repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
           
       - name: Setup Node.js
         run: |
@@ -28,13 +36,10 @@ jobs:
           npm --version
           
       - name: Install dependencies
-        run: |
-          cd repo
-          npm install --no-audit --no-fund
+        run: npm install --no-audit --no-fund
         
       - name: Build
         run: |
-          cd repo
           npm run build
           touch dist/.nojekyll
         env:
@@ -46,37 +51,15 @@ jobs:
           FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
           FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
           
-      - name: Configure Git
-        run: |
-          cd repo
-          # Inicializa o repositório Git
-          git init
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        id: pages
           
-      - name: Deploy to gh-pages
-        run: |
-          cd repo
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
           
-          # Configura o token de autenticação
-          TOKEN=${{ secrets.GITHUB_TOKEN || secrets.DEPLOY_TOKEN }}
-          
-          # Adiciona a origem remota
-          git remote add origin https://x-access-token:$TOKEN@github.com/$GITHUB_REPOSITORY.git
-          
-          # Cria ou limpa o branch gh-pages
-          if git ls-remote --exit-code --heads origin gh-pages; then
-            git fetch origin gh-pages
-            git checkout gh-pages
-            git rm -rf .
-          else
-            git checkout --orphan gh-pages
-          fi
-          
-          # Copia os arquivos de build
-          cp -r dist/* .
-          
-          # Commit e push
-          git add -A
-          git commit -m "Deploy para GitHub Pages" --allow-empty
-          git push origin gh-pages --force
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
