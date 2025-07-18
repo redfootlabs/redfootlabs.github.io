@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio de Serviços</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            padding: 60px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ff4444;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #b0b0b0;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .service-card {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 32px 24px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-arrow {
+            font-size: 14px;
+            color: #666;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .card-description {
+            font-size: 0.9rem;
+            color: #999;
+            line-height: 1.5;
+        }
+
+        /* Hover effects for each service */
+        .service-card.diagnostico:hover {
+            border-color: #ff4444;
+            background: linear-gradient(135deg, rgba(255, 68, 68, 0.15) 0%, #1a1a1a 100%);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 68, 68, 0.3);
+        }
+
+        .service-card.diagnostico .card-icon {
+            color: #ff4444;
+        }
+
+        .service-card.estrategia-ia:hover {
+            border-color: #ff8c42;
+            background: linear-gradient(135deg, rgba(255, 140, 66, 0.15) 0%, #1a1a1a 100%);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 140, 66, 0.3);
+        }
+
+        .service-card.estrategia-ia .card-icon {
+            color: #ff8c42;
+        }
+
+        .service-card.inovacao:hover {
+            border-color: #ffd700;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, #1a1a1a 100%);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .service-card.inovacao .card-icon {
+            color: #ffd700;
+        }
+
+        .service-card.governanca:hover {
+            border-color: #4a90e2;
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.15) 0%, #1a1a1a 100%);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(74, 144, 226, 0.3);
+        }
+
+        .service-card.governanca .card-icon {
+            color: #4a90e2;
+        }
+
+        .service-card.mobile:hover {
+            border-color: #ffa500;
+            background: linear-gradient(135deg, rgba(255, 165, 0, 0.15) 0%, #1a1a1a 100%);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 165, 0, 0.3);
+        }
+
+        .service-card.mobile .card-icon {
+            color: #ffa500;
+        }
+
+        .service-card.growth:hover {
+            border-color: #32cd32;
+            background: linear-gradient(135deg, rgba(50, 205, 50, 0.15) 0%, #1a1a1a 100%);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(50, 205, 50, 0.3);
+        }
+
+        .service-card.growth .card-icon {
+            color: #32cd32;
+        }
+
+        .service-card.experiencia:hover {
+            border-color: #ff6b6b;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.15) 0%, #1a1a1a 100%);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .service-card.experiencia .card-icon {
+            color: #ff6b6b;
+        }
+
+        .service-card.automacao:hover {
+            border-color: #ff8c00;
+            background: linear-gradient(135deg, rgba(255, 140, 0, 0.15) 0%, #1a1a1a 100%);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 140, 0, 0.3);
+        }
+
+        .service-card.automacao .card-icon {
+            color: #ff8c00;
+        }
+
+        /* Hover animation */
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card:hover .card-icon {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 8px currentColor);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .service-card {
+                padding: 24px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 1.75rem;
+            }
+
+            .card-title {
+                font-size: 1.1rem;
+            }
+
+            .card-description {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Portfólio de Serviços</h1>
+            <p class="subtitle">
+                Oferecemos 8 serviços especializados para transformar sua empresa. Cada um foi desenvolvido para gerar impacto imediato e resultados mensuráveis.
+            </p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card diagnostico">
+                <div class="card-header">
+                    <div class="card-icon">📊</div>
+                    <div class="dropdown-arrow">▼</div>
+                </div>
+                <h3 class="card-title">Diagnóstico Estratégico</h3>
+                <p class="card-description">
+                    Análise completa do seu negócio e identificação de oportunidades
+                </p>
+            </div>
+
+            <div class="service-card estrategia-ia">
+                <div class="card-header">
+                    <div class="card-icon">🤖</div>
+                    <div class="dropdown-arrow">▼</div>
+                </div>
+                <h3 class="card-title">Estratégia de IA</h3>
+                <p class="card-description">
+                    Implementação estratégica de inteligência artificial no seu negócio
+                </p>
+            </div>
+
+            <div class="service-card inovacao">
+                <div class="card-header">
+                    <div class="card-icon">💡</div>
+                    <div class="dropdown-arrow">▼</div>
+                </div>
+                <h3 class="card-title">Inovação Digital</h3>
+                <p class="card-description">
+                    Transformação digital estratégica e processos inovadores
+                </p>
+            </div>
+
+            <div class="service-card governanca">
+                <div class="card-header">
+                    <div class="card-icon">🛡️</div>
+                    <div class="dropdown-arrow">▼</div>
+                </div>
+                <h3 class="card-title">Governança Digital</h3>
+                <p class="card-description">
+                    Estruturação de processos e governança tecnológica
+                </p>
+            </div>
+
+            <div class="service-card mobile">
+                <div class="card-header">
+                    <div class="card-icon">📱</div>
+                    <div class="dropdown-arrow">▼</div>
+                </div>
+                <h3 class="card-title">Estratégia Mobile</h3>
+                <p class="card-description">
+                    Planejamento para presença móvel e aplicações
+                </p>
+            </div>
+
+            <div class="service-card growth">
+                <div class="card-header">
+                    <div class="card-icon">📈</div>
+                    <div class="dropdown-arrow">▼</div>
+                </div>
+                <h3 class="card-title">Growth Strategy</h3>
+                <p class="card-description">
+                    Estratégias de crescimento sustentável e escalabilidade
+                </p>
+            </div>
+
+            <div class="service-card experiencia">
+                <div class="card-header">
+                    <div class="card-icon">👥</div>
+                    <div class="dropdown-arrow">▼</div>
+                </div>
+                <h3 class="card-title">Experiência do Cliente</h3>
+                <p class="card-description">
+                    Otimização da jornada e experiência do usuário
+                </p>
+            </div>
+
+            <div class="service-card automacao">
+                <div class="card-header">
+                    <div class="card-icon">⚡</div>
+                    <div class="dropdown-arrow">▼</div>
+                </div>
+                <h3 class="card-title">Automação Inteligente</h3>
+                <p class="card-description">
+                    Identificação e implementação de automações estratégicas
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

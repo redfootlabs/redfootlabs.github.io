@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Process Cards</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            padding: 50px 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: nowrap;
+            justify-content: center;
+            max-width: 1400px;
+            align-items: center;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border-radius: 12px;
+            padding: 32px;
+            width: 280px;
+            height: 380px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .card-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .card-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+
+        .card-items {
+            list-style: none;
+        }
+
+        .card-items li {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 16px;
+            line-height: 1.4;
+        }
+
+        .card-items li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .card-arrow {
+            position: absolute;
+            top: 50%;
+            right: -30px;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .card:hover .card-arrow {
+            color: rgba(255, 255, 255, 0.9);
+            transform: translateY(-50%) translateX(5px);
+        }
+
+        .card:last-child .card-arrow {
+            display: none;
+        }
+
+        /* Card specific colors */
+        .card-analise {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a1a1a 100%);
+        }
+
+        .card-analise .card-icon {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .card-analise .card-items li::before {
+            color: #ef4444;
+        }
+
+        .card-analise:hover {
+            box-shadow: 0 20px 40px rgba(239, 68, 68, 0.2);
+        }
+
+        .card-diagnostico {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a1e1a 100%);
+        }
+
+        .card-diagnostico .card-icon {
+            background: rgba(251, 146, 60, 0.2);
+            color: #fb923c;
+        }
+
+        .card-diagnostico .card-items li::before {
+            color: #fb923c;
+        }
+
+        .card-diagnostico:hover {
+            box-shadow: 0 20px 40px rgba(251, 146, 60, 0.2);
+        }
+
+        .card-recomendacao {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a1a 100%);
+        }
+
+        .card-recomendacao .card-icon {
+            background: rgba(234, 179, 8, 0.2);
+            color: #eab308;
+        }
+
+        .card-recomendacao .card-items li::before {
+            color: #eab308;
+        }
+
+        .card-recomendacao:hover {
+            box-shadow: 0 20px 40px rgba(234, 179, 8, 0.2);
+        }
+
+        .card-roadmap {
+            background: linear-gradient(135deg, #1a1a1a 0%, #1a1e2a 100%);
+        }
+
+        .card-roadmap .card-icon {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+
+        .card-roadmap .card-items li::before {
+            color: #3b82f6;
+        }
+
+        .card-roadmap:hover {
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                flex-wrap: wrap;
+                max-width: 800px;
+            }
+            
+            .card {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .card-arrow {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card card-analise">
+            <div class="card-header">
+                <div class="card-icon">🔍</div>
+                <div class="card-number">1</div>
+            </div>
+            <h3 class="card-title">Análise</h3>
+            <p class="card-subtitle">Diagnóstico completo do seu negócio</p>
+            <ul class="card-items">
+                <li>Análise de mercado e concorrência</li>
+                <li>Avaliação de processos internos</li>
+                <li>Identificação de oportunidades</li>
+                <li>Mapeamento de recursos disponíveis</li>
+            </ul>
+            <div class="card-arrow">→</div>
+        </div>
+
+        <div class="card card-diagnostico">
+            <div class="card-header">
+                <div class="card-icon">📋</div>
+                <div class="card-number">2</div>
+            </div>
+            <h3 class="card-title">Diagnóstico</h3>
+            <p class="card-subtitle">Relatório executivo com insights acionáveis</p>
+            <ul class="card-items">
+                <li>Relatório detalhado de findings</li>
+                <li>Matriz de priorização</li>
+                <li>Análise de riscos e oportunidades</li>
+                <li>Benchmark com mercado</li>
+            </ul>
+            <div class="card-arrow">→</div>
+        </div>
+
+        <div class="card card-recomendacao">
+            <div class="card-header">
+                <div class="card-icon">💡</div>
+                <div class="card-number">3</div>
+            </div>
+            <h3 class="card-title">Recomendação</h3>
+            <p class="card-subtitle">Soluções estratégicas personalizadas</p>
+            <ul class="card-items">
+                <li>Estratégias customizadas</li>
+                <li>Planos de implementação</li>
+                <li>Seleção de tecnologias</li>
+                <li>Definição de KPIs</li>
+            </ul>
+            <div class="card-arrow">→</div>
+        </div>
+
+        <div class="card card-roadmap">
+            <div class="card-header">
+                <div class="card-icon">📊</div>
+                <div class="card-number">4</div>
+            </div>
+            <h3 class="card-title">Roadmap</h3>
+            <p class="card-subtitle">Plano de ação estruturado e cronograma</p>
+            <ul class="card-items">
+                <li>Cronograma detalhado</li>
+                <li>Marcos e entregas</li>
+                <li>Recursos necessários</li>
+                <li>Acompanhamento contínuo</li>
+            </ul>
+            <div class="card-arrow">→</div>
+        </div>
+    </div>
+</body>
+</html>

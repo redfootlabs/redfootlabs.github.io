@@ -1,193 +1,808 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consultoria - Landing Page</title>
+    <title>Redfoot Labs - Laboratório Estratégico para Inovação</title>
+    <meta name="description" content="Consultoria estratégica de inovação, tecnologia e negócios digitais. O laboratório estratégico para empresas que querem inovar sem complicar.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
     <style>
-        body {
+        :root {
+            /* Redfoot Labs Design System - Bold, Warm, Disruptive Innovation Lab */
+            --background: 0 0% 2%;
+            --foreground: 0 0% 98%;
+
+            --card: 0 0% 8%;
+            --card-foreground: 0 0% 95%;
+
+            --popover: 0 0% 8%;
+            --popover-foreground: 0 0% 95%;
+
+            --primary: 0 85% 55%;
+            --primary-foreground: 0 0% 98%;
+            --primary-glow: 0 75% 65%;
+
+            --secondary: 15 85% 60%;
+            --secondary-foreground: 0 0% 98%;
+
+            --accent: 30 95% 55%;
+            --accent-foreground: 0 0% 2%;
+
+            --muted: 0 0% 15%;
+            --muted-foreground: 0 0% 65%;
+
+            --destructive: 0 84.2% 60.2%;
+            --destructive-foreground: 0 0% 98%;
+
+            --border: 0 0% 20%;
+            --input: 0 0% 15%;
+            --ring: 0 85% 55%;
+
+            --success: 120 85% 50%;
+            --warning: 45 95% 60%;
+            --info: 210 85% 60%;
+
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+            --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 50%, hsl(var(--accent)) 100%);
+            --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(var(--muted)));
+            --gradient-text: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)));
+
+            /* Shadows */
+            --shadow-glow: 0 0 40px hsl(var(--primary) / 0.3);
+            --shadow-card: 0 10px 30px -10px hsl(var(--primary) / 0.2);
+            --shadow-intense: 0 20px 60px -15px hsl(var(--primary) / 0.4);
+
+            /* Animations */
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+            --radius: 0.75rem;
+        }
+        
+        * {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #111;
-            color: #f0f0f0;
-        }
-
-        .header {
-            background-color: #333;
-            padding: 10px 20px;
-            text-align: right;
-        }
-
-        .login-button {
-            background: linear-gradient(135deg, #e51566, #b10f4d);
-            color: #fff;
-            padding: 12px 24px;
-            font-size: 1rem;
-            font-weight: 600;
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(229, 21, 102, 0.4);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .login-button:hover {
-            background: linear-gradient(135deg, #b10f4d, #e51566);
-            box-shadow: 0 6px 14px rgba(229, 21, 102, 0.6);
-            transform: translateY(-2px);
-        }
-
-        .login-button:active {
-            transform: translateY(0);
-            box-shadow: 0 3px 8px rgba(229, 21, 102, 0.5);
-        }
-
-        /* Para acessibilidade - foco visível */
-        .login-button:focus {
-            outline: 3px solid #f8a1c1;
-            outline-offset: 3px;
-        }
-
-        .hero {
-            background-color: #222;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .hero img {
-            max-width: 300px;
-        }
-
-        section {
-            padding: 60px 20px;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        h2 {
-            border-bottom: 2px solid #444;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-
-        .portfolio {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .portfolio-box,
-        .diferenciais li {
-            background-color: #1b1b1b;
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        .diferenciais ul {
-            list-style: none;
             padding: 0;
+            box-sizing: border-box;
         }
-
-        .diferenciais li::before {
-            content: '⭐';
-            margin-right: 8px;
-            color: gold;
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: hsl(var(--background));
+            color: hsl(var(--foreground));
+            line-height: 1.6;
+            overflow-x: hidden;
         }
-
-        .contato {
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        /* Typography */
+        .gradient-text {
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
             text-align: center;
         }
-
-        .contato button {
-            padding: 15px 30px;
-            background-color: #25D366;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-smooth);
             cursor: pointer;
+            border: none;
+            font-size: 1.1rem;
         }
-
-        .contato button:hover {
-            background-color: #1ebe5d;
+        
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: hsl(var(--primary-foreground));
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .btn-primary:hover {
+            opacity: 0.9;
+            box-shadow: var(--shadow-intense);
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            border: 2px solid hsl(var(--primary));
+            color: hsl(var(--primary));
+            background: transparent;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-outline:hover {
+            background: hsl(var(--primary) / 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: var(--gradient-hero);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=1920&q=80') center/cover;
+            z-index: 1;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                hsl(var(--background) / 0.95) 0%, 
+                hsl(var(--background) / 0.90) 50%, 
+                hsl(var(--background) / 0.85) 100%);
+            z-index: 2;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 50%, hsl(var(--primary) / 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, hsl(var(--accent) / 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, hsl(var(--secondary) / 0.1) 0%, transparent 50%);
+            opacity: 0.8;
+            z-index: 3;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-title {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: hsl(var(--muted-foreground));
+            margin-bottom: 2rem;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Floating Elements */
+        .floating-icon {
+            position: absolute;
+            color: hsl(var(--primary));
+            opacity: 0.6;
+            animation: float 3s ease-in-out infinite;
+            z-index: 4;
+        }
+        
+        .floating-icon:nth-child(3) { top: 10%; left: 10%; animation-delay: 0s; }
+        .floating-icon:nth-child(4) { top: 20%; right: 15%; animation-delay: 1s; }
+        .floating-icon:nth-child(5) { bottom: 20%; left: 20%; animation-delay: 2s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: var(--shadow-glow); }
+            50% { box-shadow: var(--shadow-intense); }
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite alternate;
+        }
+        
+        /* Sections */
+        .section {
+            padding: 6rem 0;
+        }
+        
+        .section:nth-child(even) {
+            background: hsl(var(--muted) / 0.3);
+        }
+        
+        /* Grid */
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+        
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+        
+        /* Cards */
+        .card {
+            background: var(--gradient-card);
+            border: 1px solid hsl(var(--border));
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-intense);
+        }
+        
+        .card-icon {
+            width: 3rem;
+            height: 3rem;
+            padding: 0.75rem;
+            background: hsl(var(--card));
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+            color: hsl(var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+        }
+        
+        .card:hover .card-icon {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .card-description {
+            color: hsl(var(--muted-foreground));
+            line-height: 1.6;
+        }
+        
+        /* Process Steps */
+        .process-step {
+            text-align: center;
+            position: relative;
+        }
+        
+        .process-step::after {
+            content: '';
+            position: absolute;
+            top: 1.5rem;
+            left: 100%;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-primary);
+            transform: translateX(-50%);
+        }
+        
+        .process-step:last-child::after {
+            display: none;
+        }
+        
+        .process-number {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            color: hsl(var(--primary-foreground));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin: 0 auto 1rem;
+        }
+        
+        /* Contact Section */
+        .contact {
+            background: var(--gradient-primary);
+            color: hsl(var(--primary-foreground));
+            text-align: center;
+        }
+        
+        .contact .section-title {
+            color: hsl(var(--primary-foreground));
+        }
+        
+        /* Footer */
+        .footer {
+            background: hsl(var(--card));
+            border-top: 1px solid hsl(var(--border));
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        
+        .footer-links a {
+            color: hsl(var(--muted-foreground));
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+        
+        .footer-links a:hover {
+            color: hsl(var(--primary));
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .gradient-text {
+                font-size: 2rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .grid-3,
+            .grid-4 {
+                grid-template-columns: 1fr;
+            }
+            
+            .process-step::after {
+                display: none;
+            }
+        }
+        
+        /* Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
-
 <body>
-    <div class="header">
-        <button class="login-button" onclick="window.location.href='login.html'">Login</button>
-    </div>
-    <div class="hero">
-        <img src="resources/img/logo.jpg" alt="Logo da Consultoria">
-    </div>
-
-    <section>
-        <h2>Quem Somos</h2>
-        <p>Somos uma consultoria especializada em negócios, tecnologia, estratégia e inovação, ajudando empresas a
-            evoluir suas operações, explorar novos mercados e adotar inteligência artificial de forma pragmática.
-            Trabalhamos lado a lado com executivos e times internos para gerar entregáveis claros e aplicáveis.</p>
-    </section>
-
-    <section>
-        <h2>Portfólio de Produtos</h2>
-        <div class="portfolio">
-            <div class="portfolio-box">
-                <h3>Diagnóstico Empresarial</h3>
-                <p>Análise completa do estado atual, mapeando processos, estrutura, pontos críticos e oportunidades.</p>
-            </div>
-            <div class="portfolio-box">
-                <h3>Planejamento Estratégico</h3>
-                <p>Construção ou atualização do planejamento estratégico, alinhando metas, iniciativas e roadmap
-                    executivo.</p>
-            </div>
-            <div class="portfolio-box">
-                <h3>Diagnóstico de Produto</h3>
-                <p>Avaliação do portfólio digital, identificando gaps, oportunidades e desalinhamentos com o mercado.
-                </p>
-            </div>
-            <div class="portfolio-box">
-                <h3>Concepção de Produto</h3>
-                <p>Apoio completo na estruturação de novos produtos, da ideação aos requisitos, personas e roadmap.</p>
-            </div>
-            <div class="portfolio-box">
-                <h3>Gestão de Produtos Digitais</h3>
-                <p>Suporte para organizar times, fluxos e processos digitais, ganhando eficiência e acelerando entregas.
-                </p>
-            </div>
-            <div class="portfolio-box">
-                <h3>Métricas e Gestão por Dados</h3>
-                <p>Implementação de frameworks, KPIs e painéis para evoluir decisões baseadas em dados.</p>
-            </div>
-            <div class="portfolio-box">
-                <h3>Inovação e Inteligência Artificial</h3>
-                <p>Identificação de oportunidades, definição de casos e construção de pilotos com IA.</p>
-            </div>
-            <div class="portfolio-box">
-                <h3>Análise de Oportunidades e Riscos</h3>
-                <p>Estudo estratégico de tendências, mercados-alvo, riscos e recomendações práticas para expansão.</p>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        
+        <div class="floating-icon">
+            <i data-lucide="zap" size="32"></i>
+        </div>
+        <div class="floating-icon">
+            <i data-lucide="target" size="24"></i>
+        </div>
+        <div class="floating-icon">
+            <i data-lucide="rocket" size="28"></i>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="gradient-text">Redfoot Labs</span><br>
+                O laboratório estratégico<br>
+                para empresas que querem<br>
+                <span style="color: hsl(var(--primary));">inovar sem complicar</span>
+            </h1>
+            
+            <p class="hero-subtitle">
+                Consultoria estratégica de inovação, tecnologia e negócios digitais 
+                com foco em PMEs e startups. Inteligência estratégica sem execução técnica.
+            </p>
+            
+            <div class="hero-buttons">
+                <a href="#contato" class="btn btn-primary pulse-glow">
+                    Diagnóstico Gratuito
+                    <i data-lucide="arrow-right" size="20" style="margin-left: 0.5rem;"></i>
+                </a>
+                <a href="#contato" class="btn btn-outline">
+                    Fale com a gente
+                </a>
             </div>
         </div>
     </section>
 
-    <section class="diferenciais">
-        <h2>Diferenciais Competitivos</h2>
-        <ul>
-            <li>Expertise combinando negócios + tecnologia + estratégia + inovação</li>
-            <li>Foco em inteligência, não em execução técnica</li>
-            <li>Flexibilidade para trabalhar com times internos e externos</li>
-            <li>Capacidade de gerar entregáveis executivos claros, aplicáveis e alinhados a resultados</li>
-        </ul>
+    <!-- Sobre a Redfoot -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title gradient-text">Sobre a Redfoot Labs</h2>
+            
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <p style="font-size: 1.2rem; color: hsl(var(--muted-foreground)); max-width: 800px; margin: 0 auto;">
+                    Somos um laboratório de inovação estratégica que combina inteligência de negócios, 
+                    conhecimento tecnológico e visão estratégica para transformar empresas sem complicações. 
+                    Nossa missão é democratizar o acesso à inovação para PMEs e startups.
+                </p>
+            </div>
+            
+            <div class="grid grid-3">
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">
+                        <i data-lucide="brain" size="24"></i>
+                    </div>
+                    <h3 class="card-title">Inteligência Estratégica</h3>
+                    <p class="card-description">
+                        Análise profunda sem execução técnica. Focamos na estratégia, não na implementação.
+                    </p>
+                </div>
+                
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">
+                        <i data-lucide="zap" size="24"></i>
+                    </div>
+                    <h3 class="card-title">Business + Tech + Estratégia</h3>
+                    <p class="card-description">
+                        Combinação única de visão de negócios, conhecimento tecnológico e planejamento estratégico.
+                    </p>
+                </div>
+                
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">
+                        <i data-lucide="target" size="24"></i>
+                    </div>
+                    <h3 class="card-title">Rápida Aplicabilidade</h3>
+                    <p class="card-description">
+                        Soluções práticas e aplicáveis imediatamente. Sem complicações desnecessárias.
+                    </p>
+                </div>
+                
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">
+                        <i data-lucide="rocket" size="24"></i>
+                    </div>
+                    <h3 class="card-title">Alto Impacto</h3>
+                    <p class="card-description">
+                        Resultados mensuráveis e transformadores para PMEs e startups em crescimento.
+                    </p>
+                </div>
+                
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">
+                        <i data-lucide="trending-up" size="24"></i>
+                    </div>
+                    <h3 class="card-title">Crescimento Sustentável</h3>
+                    <p class="card-description">
+                        Estratégias que escalam com seu negócio e geram resultados a longo prazo.
+                    </p>
+                </div>
+                
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">
+                        <i data-lucide="users" size="24"></i>
+                    </div>
+                    <h3 class="card-title">Parceria Estratégica</h3>
+                    <p class="card-description">
+                        Atuamos como extensão da sua equipe, não como consultores distantes.
+                    </p>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section class="contato">
-        <h2>Fale Conosco</h2>
-        <p>Entre em contato para transformar sua empresa com inteligência e estratégia.</p>
-        <button onclick="window.location.href='https://wa.me/SEUNUMERO'">Falar no WhatsApp</button>
+    <!-- Portfólio de Serviços -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title gradient-text">Nossos Serviços</h2>
+            
+            <div class="grid grid-4">
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">
+                        <i data-lucide="search" size="24"></i>
+                    </div>
+                    <h3 class="card-title">Diagnóstico Estratégico</h3>
+                    <p class="card-description">
+                        Análise completa do seu negócio com identificação de oportunidades e gaps tecnológicos.
+                    </p>
+                </div>
+                
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">
+                        <i data-lucide="map" size="24"></i>
+                    </div>
+                    <h3 class="card-title">Planejamento Estratégico</h3>
+                    <p class="card-description">
+                        Roadmap detalhado com priorização de iniciativas e cronograma de implementação.
+                    </p>
+                </div>
+                
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">
+                        <i data-lucide="smartphone" size="24"></i>
+                    </div>
+                    <h3 class="card-title">Transformação Digital</h3>
+                    <p class="card-description">
+                        Estratégias para digitalização de processos e modernização tecnológica.
+                    </p>
+                </div>
+                
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">
+                        <i data-lucide="brain-circuit" size="24"></i>
+                    </div>
+                    <h3 class="card-title">Inteligência Artificial</h3>
+                    <p class="card-description">
+                        Consultoria em IA para automação de processos e otimização de resultados.
+                    </p>
+                </div>
+                
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">
+                        <i data-lucide="bar-chart" size="24"></i>
+                    </div>
+                    <h3 class="card-title">Métricas e KPIs</h3>
+                    <p class="card-description">
+                        Definição de indicadores estratégicos e sistemas de acompanhamento.
+                    </p>
+                </div>
+                
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">
+                        <i data-lucide="shield" size="24"></i>
+                    </div>
+                    <h3 class="card-title">Gestão de Riscos</h3>
+                    <p class="card-description">
+                        Identificação e mitigação de riscos tecnológicos e estratégicos.
+                    </p>
+                </div>
+                
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">
+                        <i data-lucide="users" size="24"></i>
+                    </div>
+                    <h3 class="card-title">Consultoria Executiva</h3>
+                    <p class="card-description">
+                        Mentoria para líderes e tomadores de decisão em inovação.
+                    </p>
+                </div>
+                
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">
+                        <i data-lucide="lightbulb" size="24"></i>
+                    </div>
+                    <h3 class="card-title">Inovação Estratégica</h3>
+                    <p class="card-description">
+                        Desenvolvimento de cultura de inovação e novos modelos de negócio.
+                    </p>
+                </div>
+            </div>
+        </div>
     </section>
+
+    <!-- Público-Alvo -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title gradient-text">Clientes Ideais</h2>
+            
+            <div class="grid grid-4">
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">
+                        <i data-lucide="building" size="24"></i>
+                    </div>
+                    <h3 class="card-title">PMEs em Crescimento</h3>
+                    <p class="card-description">
+                        Empresas de médio porte buscando transformação digital e inovação estratégica.
+                    </p>
+                </div>
+                
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">
+                        <i data-lucide="rocket" size="24"></i>
+                    </div>
+                    <h3 class="card-title">Startups</h3>
+                    <p class="card-description">
+                        Startups em fase de crescimento que precisam de direcionamento estratégico.
+                    </p>
+                </div>
+                
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">
+                        <i data-lucide="factory" size="24"></i>
+                    </div>
+                    <h3 class="card-title">Empresas Tradicionais</h3>
+                    <p class="card-description">
+                        Negócios estabelecidos querendo se modernizar e inovar sem riscos.
+                    </p>
+                </div>
+                
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">
+                        <i data-lucide="cpu" size="24"></i>
+                    </div>
+                    <h3 class="card-title">Interessados em IA</h3>
+                    <p class="card-description">
+                        Empresas que querem implementar IA e automação de forma estratégica.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Como Funciona -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title gradient-text">Como Funciona</h2>
+            
+            <div class="grid grid-4">
+                <div class="process-step animate-on-scroll">
+                    <div class="process-number">1</div>
+                    <h3 class="card-title">Análise</h3>
+                    <p class="card-description">
+                        Diagnóstico completo da situação atual da empresa e identificação de oportunidades.
+                    </p>
+                </div>
+                
+                <div class="process-step animate-on-scroll">
+                    <div class="process-number">2</div>
+                    <h3 class="card-title">Diagnóstico</h3>
+                    <p class="card-description">
+                        Relatório detalhado com insights estratégicos e recomendações personalizadas.
+                    </p>
+                </div>
+                
+                <div class="process-step animate-on-scroll">
+                    <div class="process-number">3</div>
+                    <h3 class="card-title">Recomendação</h3>
+                    <p class="card-description">
+                        Plano estratégico com soluções práticas e priorizadas para implementação.
+                    </p>
+                </div>
+                
+                <div class="process-step animate-on-scroll">
+                    <div class="process-number">4</div>
+                    <h3 class="card-title">Roadmap</h3>
+                    <p class="card-description">
+                        Cronograma detalhado com etapas, métricas e acompanhamento contínuo.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato -->
+    <section class="section contact" id="contato">
+        <div class="container">
+            <h2 class="section-title">Vamos construir o futuro da sua empresa?</h2>
+            
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
+                Transforme sua visão em resultados concretos. Comece com um diagnóstico gratuito.
+            </p>
+            
+            <div class="hero-buttons">
+                <a href="mailto:contato@redfootlabs.com" class="btn btn-outline" style="color: white; border-color: white;">
+                    Fale conosco
+                    <i data-lucide="mail" size="20" style="margin-left: 0.5rem;"></i>
+                </a>
+                <a href="https://wa.me/5511999999999" class="btn btn-outline" style="color: white; border-color: white;">
+                    WhatsApp
+                    <i data-lucide="message-circle" size="20" style="margin-left: 0.5rem;"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                <span class="gradient-text" style="font-size: 1.5rem;">Redfoot Labs</span>
+            </div>
+            
+            <p style="color: hsl(var(--muted-foreground)); margin-bottom: 1rem;">
+                © 2024 Redfoot Labs. Laboratório estratégico para empresas que querem inovar sem complicar.
+            </p>
+            
+            <div class="footer-links">
+                <a href="#privacidade">Privacidade</a>
+                <a href="#termos">Termos</a>
+                <a href="#contato">Contato</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Animate on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
 </body>
-
 </html>

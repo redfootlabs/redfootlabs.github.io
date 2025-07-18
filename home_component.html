@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redfoot Labs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%);
+            color: #ffffff;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background Animation */
+        .bg-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 68, 68, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 127, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(255, 165, 0, 0.1) 0%, transparent 50%);
+            animation: bgMove 20s ease-in-out infinite;
+        }
+
+        @keyframes bgMove {
+            0%, 100% { 
+                background: 
+                    radial-gradient(circle at 20% 20%, rgba(255, 68, 68, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 80%, rgba(0, 255, 127, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 40% 60%, rgba(255, 165, 0, 0.1) 0%, transparent 50%);
+            }
+            50% { 
+                background: 
+                    radial-gradient(circle at 80% 30%, rgba(255, 68, 68, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 20% 70%, rgba(0, 255, 127, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 60% 40%, rgba(255, 165, 0, 0.1) 0%, transparent 50%);
+            }
+        }
+
+        /* Header */
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 24px;
+            color: #ff4444;
+            font-weight: 700;
+        }
+
+        .login-btn {
+            background: transparent;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            padding: 0 40px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .brand-name {
+            font-size: 16px;
+            color: #999;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 30px;
+            max-width: 900px;
+        }
+
+        .highlight-red {
+            color: #ff4444;
+        }
+
+        .highlight-white {
+            color: #ffffff;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #b0b0b0;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 700px;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #ff4444;
+            color: #ffffff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #ff3333;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 68, 68, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #ffffff;
+            border: 2px solid #ff4444;
+        }
+
+        .btn-secondary:hover {
+            background: #ff4444;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 68, 68, 0.3);
+        }
+
+        /* Floating Emojis */
+        .floating-emoji {
+            position: absolute;
+            font-size: 30px;
+            animation: bounce 3s ease-in-out infinite;
+            z-index: 3;
+        }
+
+        @keyframes bounce {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% { 
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        .emoji-1 {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .emoji-2 {
+            top: 20%;
+            right: 15%;
+            animation-delay: 1s;
+        }
+
+        .emoji-3 {
+            bottom: 20%;
+            left: 8%;
+            animation-delay: 2s;
+        }
+
+        .emoji-4 {
+            bottom: 15%;
+            right: 10%;
+            animation-delay: 0.5s;
+        }
+
+        .emoji-5 {
+            top: 50%;
+            left: 5%;
+            animation-delay: 1.5s;
+        }
+
+        .emoji-6 {
+            top: 60%;
+            right: 5%;
+            animation-delay: 2.5s;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+
+            .main-content {
+                padding: 0 20px;
+            }
+
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                padding: 12px 24px;
+                font-size: 14px;
+            }
+
+            .floating-emoji {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+
+            .floating-emoji {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">⚡</div>
+        <button class="login-btn">🔐 Entrar</button>
+    </div>
+
+    <!-- Floating Emojis -->
+    <div class="floating-emoji emoji-1">⚡</div>
+    <div class="floating-emoji emoji-2">🎯</div>
+    <div class="floating-emoji emoji-3">🚀</div>
+    <div class="floating-emoji emoji-4">🎯</div>
+    <div class="floating-emoji emoji-5">⚡</div>
+    <div class="floating-emoji emoji-6">🚀</div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="brand-name">Redfoot Labs</div>
+        
+        <h1 class="main-title">
+            <span class="highlight-red">O laboratório estratégico</span><br>
+            <span class="highlight-white">para empresas que querem</span><br>
+            <span class="highlight-red">inovar sem complicar</span>
+        </h1>
+        
+        <p class="subtitle">
+            Consultoria estratégica de inovação, tecnologia e negócios digitais com foco<br>
+            em PMEs e startups. Inteligência estratégica sem execução técnica.
+        </p>
+        
+        <div class="button-group">
+            <a href="#" class="btn btn-primary">
+                Diagnóstico Gratuito
+                <span>→</span>
+            </a>
+            <a href="#" class="btn btn-secondary">
+                Fale com a gente
+            </a>
+        </div>
+    </div>
+</body>
+</html>

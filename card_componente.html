@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cards Component</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            padding: 40px 20px;
+        }
+
+        .cards-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #2a2a2a 0%, #1e1e1e 100%);
+            border-radius: 12px;
+            padding: 32px 24px;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            border-color: #ff4444;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(255, 68, 68, 0.2);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            font-size: 24px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #ffffff;
+            line-height: 1.3;
+        }
+
+        .card-description {
+            font-size: 14px;
+            color: #b0b0b0;
+            line-height: 1.5;
+        }
+
+        /* Ícones específicos para cada card */
+        .icon-strategy {
+            color: #ff4444;
+        }
+
+        .icon-business {
+            color: #ffa500;
+        }
+
+        .icon-speed {
+            color: #ff8c00;
+        }
+
+        .icon-impact {
+            color: #ff6b6b;
+        }
+
+        .icon-growth {
+            color: #32cd32;
+        }
+
+        .icon-partnership {
+            color: #87ceeb;
+        }
+
+        /* Animação adicional */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .card:hover .card-icon {
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .card {
+                padding: 24px 20px;
+            }
+            
+            .card-title {
+                font-size: 16px;
+            }
+            
+            .card-description {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cards-container">
+        <div class="card">
+            <div class="card-icon icon-strategy">⚡</div>
+            <h3 class="card-title">Inteligência Estratégica</h3>
+            <p class="card-description">Análise profunda sem execução técnica. Focamos na estratégia, não na implementação.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon icon-business">⚡</div>
+            <h3 class="card-title">Business + Tech + Estratégia</h3>
+            <p class="card-description">Combinação única de visão de negócios, conhecimento tecnológico e planejamento estratégico.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon icon-speed">🎯</div>
+            <h3 class="card-title">Rápida Aplicabilidade</h3>
+            <p class="card-description">Soluções práticas e aplicáveis imediatamente. Sem complicações desnecessárias.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon icon-impact">🚀</div>
+            <h3 class="card-title">Alto Impacto</h3>
+            <p class="card-description">Resultados mensuráveis e transformadores para PMEs e startups em crescimento.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon icon-growth">📈</div>
+            <h3 class="card-title">Crescimento Sustentável</h3>
+            <p class="card-description">Estratégias que escalam com seu negócio e geram resultados a longo prazo.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon icon-partnership">👥</div>
+            <h3 class="card-title">Parceria Estratégica</h3>
+            <p class="card-description">Atuamos como extensão da sua equipe, não como consultores distantes.</p>
+        </div>
+    </div>
+</body>
+</html>

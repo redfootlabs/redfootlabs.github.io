@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossos Clientes Ideais</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ff6b35;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #b0b0b0;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(255, 107, 53, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 107, 53, 0.3);
+        }
+
+        .card:nth-child(1):hover {
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.3);
+        }
+
+        .card:nth-child(2):hover {
+            box-shadow: 0 20px 40px rgba(255, 71, 87, 0.3);
+        }
+
+        .card:nth-child(3):hover {
+            box-shadow: 0 20px 40px rgba(255, 165, 2, 0.3);
+        }
+
+        .card:nth-child(4):hover {
+            box-shadow: 0 20px 40px rgba(55, 66, 250, 0.3);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card:nth-child(1) .card-icon {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8f65 100%);
+        }
+
+        .card:nth-child(2) .card-icon {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff4757 100%);
+        }
+
+        .card:nth-child(3) .card-icon {
+            background: linear-gradient(135deg, #ffa502 0%, #ff6348 100%);
+        }
+
+        .card:nth-child(4) .card-icon {
+            background: linear-gradient(135deg, #3742fa 0%, #2f3542 100%);
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .card-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-description {
+            color: #b0b0b0;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-features {
+            list-style: none;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-features li {
+            color: #d0d0d0;
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .card-features li::before {
+            content: '•';
+            color: #ff6b35;
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+            top: -2px;
+        }
+
+        .card:hover .card-features li {
+            color: #ffffff;
+        }
+
+        @media (max-width: 1024px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Nossos Clientes Ideais</h1>
+        <p class="subtitle">
+            Trabalhamos com empresas que têm visão de futuro e querem crescer de forma inteligente. Se você se 
+            identifica com algum desses perfis, vamos conversar.
+        </p>
+
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                </div>
+                <h3 class="card-title">PMEs em Crescimento</h3>
+                <p class="card-description">
+                    Empresas de pequeno e médio porte buscando escalar operações e aumentar competitividade
+                </p>
+                <ul class="card-features">
+                    <li>10-500 funcionários</li>
+                    <li>Faturamento R$ 2M-50M</li>
+                    <li>Mercado tradicional</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                </div>
+                <h3 class="card-title">Startups Escalando</h3>
+                <p class="card-description">
+                    Startups em fase de crescimento que precisam estruturar processos e estratégias
+                </p>
+                <ul class="card-features">
+                    <li>Série A/B</li>
+                    <li>Product Market Fit</li>
+                    <li>Crescimento acelerado</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                    </svg>
+                </div>
+                <h3 class="card-title">Empresas Tradicionais</h3>
+                <p class="card-description">
+                    Negócios estabelecidos querendo se modernizar e adotar novas tecnologias
+                </p>
+                <ul class="card-features">
+                    <li>Mercado maduro</li>
+                    <li>Processos legados</li>
+                    <li>Pressão competitiva</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M9 11H7v9a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v2zm3-8a2 2 0 0 1 2 2v1h-1V5a1 1 0 0 0-1-1 1 1 0 0 0-1 1v1h-1V5a2 2 0 0 1 2-2z"/>
+                    </svg>
+                </div>
+                <h3 class="card-title">Interessados em IA</h3>
+                <p class="card-description">
+                    Empresas que querem implementar inteligência artificial de forma estratégica
+                </p>
+                <ul class="card-features">
+                    <li>Automação de processos</li>
+                    <li>Análise de dados</li>
+                    <li>Vantagem competitiva</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
